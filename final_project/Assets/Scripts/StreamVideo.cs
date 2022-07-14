@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
@@ -28,8 +29,14 @@ public class StreamVideo : MonoBehaviour
         rawImage.texture = videoPlayer.texture;
         videoPlayer.Play();
         audioSource.Play();
+        videoPlayer.isLooping = false;
+
+        videoPlayer.loopPointReached += EndReached;
     }
 
-
-
+    void EndReached(UnityEngine.Video.VideoPlayer vp)
+    {
+        vp.Stop();
+        SceneManager.LoadScene("start");
+    }
 }
