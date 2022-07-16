@@ -6,10 +6,8 @@ using UnityEngine.UI;
 using UnityEngine.Video;
 
 public class StreamVideo : MonoBehaviour
-{
-    public RawImage rawImage;
+{ 
     public VideoPlayer videoPlayer;
-    public AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -26,9 +24,7 @@ public class StreamVideo : MonoBehaviour
             yield return waitForSeconds;
             break;
         }
-        rawImage.texture = videoPlayer.texture;
         videoPlayer.Play();
-        audioSource.Play();
         videoPlayer.isLooping = false;
 
         videoPlayer.loopPointReached += EndReached;
@@ -37,6 +33,8 @@ public class StreamVideo : MonoBehaviour
     void EndReached(UnityEngine.Video.VideoPlayer vp)
     {
         vp.Stop();
-        SceneManager.LoadScene("start");
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SceneManager.LoadScene(0);
     }
 }
