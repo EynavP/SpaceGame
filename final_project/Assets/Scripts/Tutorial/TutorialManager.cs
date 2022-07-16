@@ -10,7 +10,7 @@ public class TutorialManager : MonoBehaviour
 
     public Text expText;
 
-    public Button startGame;
+    //public Button startGame;
     private int currentScene;
 
     private static TutorialManager instance;
@@ -27,13 +27,13 @@ public class TutorialManager : MonoBehaviour
             return instance;
         }
     }
-
+    private bool hasFinishedTutorial = false;
     private Tutorial currentTutorial;
     // Start is called before the first frame update
     void Start()
     {
         SetNextTutorial(0);
-        startGame.interactable = false;
+        //startGame.interactable = false;
         currentScene = (SceneManager.GetActiveScene().buildIndex);
 
     }
@@ -43,6 +43,13 @@ public class TutorialManager : MonoBehaviour
     {
         if (currentTutorial)
             currentTutorial.CheckIfHappening();
+        if (hasFinishedTutorial)
+        {
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                StartGame();
+            }
+        }
     }
 
     public void CompletedTutorial()
@@ -57,6 +64,7 @@ public class TutorialManager : MonoBehaviour
         if (!currentTutorial)
         {
             CompletedAllTutorials();
+            hasFinishedTutorial = true;
             return;
         }
 
@@ -65,9 +73,7 @@ public class TutorialManager : MonoBehaviour
 
     public void CompletedAllTutorials()
     {
-        expText.text = "You have competed all the tutorials, now to the game";
-
-        startGame.interactable = true;
+        expText.text = "You have completed all the tutorials, press the P key to start the game";
     }
 
     public Tutorial getTutorialByOrder(int Order)
